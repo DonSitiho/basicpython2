@@ -1,28 +1,50 @@
-# Guardo la secuencia completa de la preproinsulina en una variable.
-# Uso \ para dividir la línea porque es muy larga.
-preproInsulin = (
-"malwmrllpllallalwgpdpaaafvnqhlcgshlvealylvcgergffytpktr" \
-"reaedlqvgqvelgggpgagslqplalegslqkrgiveqcctsicslyqlenycn"
-)
-# Ahora guardo las partes de la insulina en variables separadas.
-# Esto es para trabajar mejor con cada parte.
-lsInsulin = "malwmrllpllallalwgpdpaaa" 
-bInsulin = "fvnqhlcgshlvealylvcgergffytpkt" 
-aInsulin = "giveqcctsicslyqlenycn" 
-cInsulin = "rreaedlqvgqvelgggpgagslqplalegslqkr"
+import re
 
-# Aquí junto la cadena B y la cadena A.
-# El símbolo + sirve para pegar textos.
-insulin = bInsulin + aInsulin
+with open("prepoinsulin-seq.txt", "r") as f:    
+    raw_data = f.read()
+    
+    clean_data = re.sub(r"\bORIGIN\b", "", raw_data, flags = re.IGNORECASE)
 
-# Ahora voy a imprimir cosas en pantalla.
+    clean_data = clean_data.replace("//", "")    
 
-# Imprimo un mensaje primero.
-print("La secuencia de la preproinsulina humana es:")
+    clean_data = re.sub(r"[^A-Za-z]", "", clean_data)
 
-# Aquí imprimo lo que guardé en la variable.
-print(preproInsulin)
+    clean_data = clean_data.lower()
 
-# Aquí imprimo texto y le agrego la cadena A.
-print("La secuencia de la insulina humana, cadena A: " + aInsulin)
+with open("prepoinsulin-seq.txt", "w") as f:
+    f.write(clean_data)
 
+print("Longitud prepoinsulina = ", len(clean_data))
+
+if len(clean_data) != 110:
+    print("Error, la secuencia no tiene 110 caracteres")
+    exit()
+
+lsinsulin = clean_data[0:24]
+
+binsulin = clean_data[24:54]
+
+cinsulin = clean_data[54:89]
+
+ainsulin = clean_data[89:110]
+
+with open("lsinsulin-seq-clean.xt", "w") as f:
+    f.write(lsinsulin)
+
+with open("lsinsulin-seq-clean.xt", "w") as f:
+    f.write(binsulin)
+
+with open("lsinsulin-seq-clean.xt", "w") as f:
+    f.write(cinsulin)
+with open("lsinsulin-seq-clean.xt", "w") as f:
+    f.write(ainsulin)
+
+print("lsinsulin = ", len(lsinsulin))
+print("lsinsulin = ", len(binsulin))
+print("lsinsulin = ", len(cinsulin))
+print("lsinsulin = ", len(ainsulin))
+
+insulin = binsulin + ainsulin
+print("Insulina procesada = ", len(insulin))
+
+print("'secuencia de la insulina = ",  insulin)
